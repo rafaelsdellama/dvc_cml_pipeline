@@ -43,14 +43,14 @@ stages:
     params:
       params.yaml:
         train.import_module: sklearn.ensemble
-        train.name: ExtraTreesClassifier
-        train.params.n_estimators: 100
+        train.name: RandomForestClassifier
+        train.params.n_estimators: 10
         train.params.n_jobs: -1
         train.params.random_state: 42
     outs:
     - path: model.pkl
-      md5: 7f89ed0cb8815eaf40020761fb589ea6
-      size: 378137
+      md5: 68d8890c4f853aef76c0895a849b1544
+      size: 16841
   evaluate:
     cmd: python3 src/evaluate.py model.pkl data/features scores.json cm_classes.csv
     deps:
@@ -59,8 +59,8 @@ stages:
       size: 7504
       nfiles: 2
     - path: model.pkl
-      md5: 7f89ed0cb8815eaf40020761fb589ea6
-      size: 378137
+      md5: 68d8890c4f853aef76c0895a849b1544
+      size: 16841
     - path: src/evaluate.py
       md5: bb479b6174ea05a8e6c955856fc754fa
       size: 1893
@@ -72,8 +72,8 @@ stages:
         - adjusted_rand_score
     outs:
     - path: cm_classes.csv
-      md5: a72c72b5d9fc753bdbb25abd67fedb05
+      md5: e78addc2ab334b4b3ae0e612f6f32fe7
       size: 315
     - path: scores.json
-      md5: 3121067be96f2f6cc83aa00cd7012da5
-      size: 102
+      md5: 570a1acaaf143e1702dbc632985f9259
+      size: 71
