@@ -5,11 +5,13 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
 
+pipeline_path = os.path.abspath(os.path.join(os.path.join(__file__, os.pardir), os.pardir))
+
 # read params
-params = yaml.safe_load(open('params.yaml'))['prepare']
+params = yaml.safe_load(open(os.path.join(pipeline_path, 'params.yaml')))['prepare']
 
 # create folder to save file
-data_path = os.path.join('data', 'sklearn_classifier', 'prepared')
+data_path = os.path.join(pipeline_path, 'data', 'prepared')
 os.makedirs(data_path, exist_ok=True)
 
 # fetch data
@@ -18,9 +20,9 @@ data = load_iris()
 # split
 X_train, X_test, y_train, y_test = train_test_split(
     data.data,
-    data.target,
-    test_size=params['train_test_split']['test_size'],
-    random_state=params['train_test_split']['random_state']
+    [data.target_names[i] for i in data.target],
+    test_size=params['test_size'],
+    random_state=params['random_state']
 )
 
 # save
@@ -30,4 +32,5 @@ df_test = pd.DataFrame(np.concatenate((X_test,  np.expand_dims(y_test, 1)), axis
 df_train.to_csv(os.path.join(data_path, 'train.csv'))
 df_test.to_csv(os.path.join(data_path, 'test.csv'))
 
-# dvc run -n prepare -p prepare.categories -d src/prepare.py -o data/prepared python3 src/prepare.py
+# dvc run -n prepare -p prepare.test_size,prepare.random_state -d src/prepare.py -o
+# data/prepared python3 src/prepare.py

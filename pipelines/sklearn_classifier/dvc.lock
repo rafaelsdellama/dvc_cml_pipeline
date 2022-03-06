@@ -1,0 +1,79 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python3 src/prepare.py
+    deps:
+    - path: src/prepare.py
+      md5: 0b0b1130ececa4efb762a1a545cc69d6
+      size: 1204
+    params:
+      params.yaml:
+        prepare.random_state: 42
+        prepare.test_size: 0.33
+    outs:
+    - path: data/prepared
+      md5: 16ca6e35f66518ac034d8fbac55f31bd.dir
+      size: 4386
+      nfiles: 2
+  featurize:
+    cmd: python3 src/featurize.py data/prepared data/features
+    deps:
+    - path: data/prepared
+      md5: 16ca6e35f66518ac034d8fbac55f31bd.dir
+      size: 4386
+      nfiles: 2
+    - path: src/featurize.py
+      md5: a45980388dbed4fb3a719758ea256f0b
+      size: 1482
+    outs:
+    - path: data/features
+      md5: ec6e8711e24ae6ca0339aafd572726ca.dir
+      size: 7504
+      nfiles: 2
+  train:
+    cmd: python3 src/train.py data/features model.pkl
+    deps:
+    - path: data/features
+      md5: ec6e8711e24ae6ca0339aafd572726ca.dir
+      size: 7504
+      nfiles: 2
+    - path: src/train.py
+      md5: be7fe09be0b33b3826a4fff262621809
+      size: 1194
+    params:
+      params.yaml:
+        train.import_module: sklearn.ensemble
+        train.name: ExtraTreesClassifier
+        train.params.n_estimators: 100
+        train.params.n_jobs: -1
+        train.params.random_state: 42
+    outs:
+    - path: model.pkl
+      md5: 7f89ed0cb8815eaf40020761fb589ea6
+      size: 378137
+  evaluate:
+    cmd: python3 src/evaluate.py model.pkl data/features scores.json cm_classes.csv
+    deps:
+    - path: data/features
+      md5: ec6e8711e24ae6ca0339aafd572726ca.dir
+      size: 7504
+      nfiles: 2
+    - path: model.pkl
+      md5: 7f89ed0cb8815eaf40020761fb589ea6
+      size: 378137
+    - path: src/evaluate.py
+      md5: bb479b6174ea05a8e6c955856fc754fa
+      size: 1893
+    params:
+      params.yaml:
+        evaluate.metrics:
+        - accuracy
+        - balanced_accuracy
+        - adjusted_rand_score
+    outs:
+    - path: cm_classes.csv
+      md5: a72c72b5d9fc753bdbb25abd67fedb05
+      size: 315
+    - path: scores.json
+      md5: 3121067be96f2f6cc83aa00cd7012da5
+      size: 102
