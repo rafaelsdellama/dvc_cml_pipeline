@@ -1,0 +1,25 @@
+schema: '2.0'
+stages:
+  all_pipeline:
+    cmd: python3 src/all_pipeline.py
+    deps:
+    - path: src/all_pipeline.py
+      md5: 29aa7bbf398ea6fa6f404e2db48be43f
+      size: 3780
+    params:
+      params.yaml:
+        evaluate.plots_file: metrics/cm_classes.csv
+        evaluate.scores_file: metrics/scores.json
+        prepare.random_state: 42
+        prepare.test_size: 0.33
+        train.model_filename: models/model.pkl
+        train.params.batch_size: 2048
+        train.params.epochs: 2
+        train.params.random_state: 42
+    outs:
+    - path: metrics/scores.json
+      md5: fdeaac9d1cb988ebc5b5ee2fc1d5dca5
+      size: 103
+    - path: models/model.pkl
+      md5: c0c297b70dc52c708cee55c0298843dc
+      size: 1853670

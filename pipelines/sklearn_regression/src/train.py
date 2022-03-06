@@ -37,7 +37,8 @@ model = getattr(
 model.fit(X, y)
 
 # save the models
+
 with open(model_filename, 'wb') as f:
     pickle.dump(model, f)
 
-# dvc run -n train -p train.import_module,train.name,train.params.n_estimators,train.params.n_jobs,train.params.random_state -d src/train.py -d data/features -o models/model.pkl python3 src/train.py data/features models/models.pkl
+# dvc run -n train -p train.import_module,train.name,train.params.n_jobs -d src/train.py -d data/features -o models/model.pkl python3 src/train.py data/features models/model.pkl

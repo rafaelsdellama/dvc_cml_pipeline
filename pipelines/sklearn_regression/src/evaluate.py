@@ -5,12 +5,13 @@ import pandas as pd
 from sklearn.metrics import (
     get_scorer,
     SCORERS,
+    confusion_matrix,
+    classification_report,
 )
 import pickle
 import json
 import yaml
 import numpy as np
-from datetime import date
 
 # read command line parameters
 if len(sys.argv) != 5:
@@ -44,13 +45,10 @@ with open(model_filename, 'rb') as f:
     model = pickle.load(f)
 
 # make predictions
-predictions_by_class = model.predict_proba(X_test)
-predictions = np.argmax(predictions_by_class, axis=1)
+predictions = model.predict(X_test)
 
 # generate scores
-metrics = {
-    'ref_date': date.today().strftime('%Y-%m-%d')
-}
+metrics = {}
 params['metrics'] = [f for f in params['metrics'] if f in list(SCORERS.keys())]
 for m in params['metrics']:
     m_result = get_scorer(m)(model, X_test, y_test)
@@ -62,5 +60,5 @@ with open(scores_file, 'w') as f:
 
 pd.DataFrame({'predicted': list(predictions), 'real': list(y_test)}).to_csv(plots_file, index=False)
 
-# dvc run -n evaluate -p evaluate.metrics -d src/evaluate.py -d models/model.pkl -d data/features --metrics-no-cache metrics/scores.json python3 src/evaluate.py models/model.pkl data/features metrics/scores.json metrics/cm_classes.csv
-# dvc plots show cm_classes.csv --template confusion -x real -y predicted
+# dvc run -n evaluate -p evaluate.metrics -d src/evaluate.py -d models/model.pkl -d data/features --metrics-no-cache metrics/scores.json python3 src/evaluate.py models/model.pkl data/features metrics/scores.json metrics/predicted.csv
+# dvc plots show metrics/predicted.csv --template scatter -x real -y predicted

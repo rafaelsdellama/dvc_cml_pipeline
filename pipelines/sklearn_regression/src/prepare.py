@@ -1,6 +1,6 @@
 import os
 import yaml
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
@@ -15,12 +15,12 @@ data_path = os.path.join(pipeline_path, 'data', 'prepared')
 os.makedirs(data_path, exist_ok=True)
 
 # fetch data
-data = load_iris()
+data = load_diabetes()
 
 # split
 X_train, X_test, y_train, y_test = train_test_split(
     data.data,
-    [data.target_names[i] for i in data.target],
+    data.target,
     test_size=params['test_size'],
     random_state=params['random_state']
 )
@@ -33,3 +33,4 @@ df_train.to_csv(os.path.join(data_path, 'train.csv'))
 df_test.to_csv(os.path.join(data_path, 'test.csv'))
 
 # dvc run -n prepare -p prepare.test_size,prepare.random_state -d src/prepare.py -o data/prepared python3 src/prepare.py
+

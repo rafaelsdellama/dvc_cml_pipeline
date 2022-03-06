@@ -1,0 +1,49 @@
+name: train-models
+
+on:
+  # Allows you to run this workflow manually from the Actions tab or through HTTP API
+  workflow_dispatch:
+  schedule:
+    # (UTC TIME)
+    - cron: '*/5 * * * *'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install requirements
+        run: pip install -r pipelines/sklearn_classifier/src/requirements.txt
+
+      - uses: iterative/setup-cml@v1
+      - name: DVC Repro
+        run: |
+          # Your ML workflow goes here
+          dvc repro -P -f
+    
+          - name: Write CML report
+            env:
+              REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            run: |
+              # Post reports as comments in GitHub PRs
+              
+              # Report metrics
+              echo "## Métricas" >> report.md 
+              cat pipelines/sklearn_classifier/scores.json >> report.md
+              
+              # Publish confusion matrix diff
+              echo "## Plots" >> report.md
+              echo "### Class confusions" >> report.md
+              dvc plots show pipelines/sklearn_classifier/cm_classes.csv --template confusion -x real -y predicted --show-vega > pipelines/sklearn_classifier/vega.json
+              vl2png pipelines/sklearn_classifier/vega.json -s 1.5 | cml-publish --md >> report.md
+              
+              cml-send-comment report.md
+              cml-send-github-check report.md
+              cml-pr new_models

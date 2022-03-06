@@ -23,14 +23,12 @@ stages:
     params:
     - train.import_module
     - train.name
-    - train.params.n_estimators
     - train.params.n_jobs
-    - train.params.random_state
     outs:
     - models/model.pkl
   evaluate:
     cmd: python3 src/evaluate.py models/model.pkl data/features metrics/scores.json
-      metrics/cm_classes.csv
+      metrics/predicted.csv
     deps:
     - data/features
     - models/model.pkl
