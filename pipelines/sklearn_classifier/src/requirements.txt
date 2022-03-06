@@ -1,4 +1,4 @@
-dvc~=2.9.5
+dvc[gdrive]~=2.9.5
 numpy~=1.22.2
 scikit-learn~=1.0.2
 PyYAML~=6.0

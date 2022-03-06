@@ -1,0 +1,42 @@
+name: generate_report
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+#    container: docker://ghcr.io/iterative/cml: 0-dvc2-base1
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install requirements
+        run:           pip install -r pipelines/sklearn_classifier/src/requirements.txt
+
+      - uses: iterative/setup-cml@v1
+      - name: DVC Repro
+        run: |
+          # Your ML workflow goes here
+          dvc repro -P
+
+      - name: Write CML report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Post reports as comments in GitHub PRs
+          
+          # Report metrics
+          echo "## Métricas" >> report.md 
+          cat pipelines/sklearn_classifier/scores.json >> report.md
+          
+          # Publish confusion matrix diff
+          echo "## Plots" >> report.md
+          echo "### Class confusions" >> report.md
+          dvc plots show pipelines/sklearn_classifier/cm_classes.csv --template confusion -x real -y predicted --show-vega > pipelines/sklearn_classifier/vega.json
+          vl2png pipelines/sklearn_classifier/vega.json -s 1.5 | cml-publish --md >> report.md
+          
+          cml-send-comment report.md
+          cml-send-github-check report.md
