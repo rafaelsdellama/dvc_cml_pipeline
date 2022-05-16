@@ -35,11 +35,3 @@ $ source venv/bin/activate
 $ cd pipelines/PIPELINE
 $ pip install -r src/requirements.txt
 ```
-<<<<<<< HEAD
-=======
-
-# Referências:
-- [The ultimate guide to building maintainable Machine Learning pipelines using DVC](https://towardsdatascience.com/the-ultimate-guide-to-building-maintainable-machine-learning-pipelines-using-dvc-a976907b2a1b)
-- [Creating Data Science Pipelines using DVC](https://blog.koverhoop.com/creating-datascience-pipelines-using-dvc-ea7d934fafac)
-- [CML](https://github.com/iterative/cml#using-cml-with-dvc)
->>>>>>> 6e2cab6cbf87db14c0d23020f3eb80013222df7f
