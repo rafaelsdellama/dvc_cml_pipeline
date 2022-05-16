@@ -731,12 +731,10 @@ evaluate:
 - [End to End Machine Learning Pipeline With MLOps Tools (MLFlow+DVC+Flask+Heroku+EvidentlyAI+Github Actions)](https://medium.com/@shanakachathuranga/end-to-end-machine-learning-pipeline-with-mlops-tools-mlflow-dvc-flask-heroku-evidentlyai-github-c38b5233778c)
 - [https://madewithml.com/#mlops](https://madewithml.com/#mlops)
 - [https://github.com/GokuMohandas/MLOps](https://github.com/GokuMohandas/MLOps)
-
 - [https://github.com/shanakaChathu/churn_model](https://github.com/shanakaChathu/churn_model)
 - [https://github.com/hzdr/mlops_comparison](https://github.com/hzdr/mlops_comparison)
 
 ### DVC + CML
 - [CML](https://github.com/iterative/cml)
-- [Using CML with DVC](https://github.com/iterative/cml#using-cml-with-dvc)
 - [CML with DVC use case](https://github.com/iterative/cml_dvc_case)
 - [DVC CI/CD MLOps Pipeline](https://github.com/mlops-guide/dvc-gitactions)

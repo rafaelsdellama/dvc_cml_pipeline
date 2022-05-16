@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-name: train-models
-=======
 name: train-model
->>>>>>> 6e2cab6cbf87db14c0d23020f3eb80013222df7f
 
 on:
   # Allows you to run this workflow manually from the Actions tab or through HTTP API
   workflow_dispatch:
   schedule:
     # (UTC TIME)
-<<<<<<< HEAD
     - cron: '*/5 * * * *'
-=======
-    - cron: '0,10,20,30,40,50 * * * *'
->>>>>>> 6e2cab6cbf87db14c0d23020f3eb80013222df7f
 
 jobs:
   run:
@@ -28,7 +20,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install requirements
-        run: pip install -r pipelines/sklearn_classifier/src/requirements.txt
+        run: pip install -r pipelines/sklearn_classifier/requirements.txt
 
       - uses: iterative/setup-cml@v1
       - name: DVC Repro
@@ -52,6 +44,6 @@ jobs:
               dvc plots show pipelines/sklearn_classifier/cm_classes.csv --template confusion -x real -y predicted --show-vega > pipelines/sklearn_classifier/vega.json
               vl2png pipelines/sklearn_classifier/vega.json -s 1.5 | cml-publish --md >> report.md
               
-              cml-send-comment report.md
+#              cml-send-comment report.md
               cml-send-github-check report.md
               cml-pr new_models

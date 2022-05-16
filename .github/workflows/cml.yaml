@@ -13,15 +13,6 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install requirements
-        run:           pip install -r pipelines/sklearn_classifier/src/requirements.txt
-
-      - uses: iterative/setup-cml@v1
-      - name: DVC Repro
-        run: |
-          # Your ML workflow goes here
-          dvc repro -P
-
       - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,4 +30,4 @@ jobs:
           vl2png pipelines/sklearn_classifier/vega.json -s 1.5 | cml-publish --md >> report.md
           
           cml-send-comment report.md
-          cml-send-github-check report.md
+#          cml-send-github-check report.md
