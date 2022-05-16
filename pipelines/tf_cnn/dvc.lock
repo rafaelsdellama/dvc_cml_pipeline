@@ -4,8 +4,8 @@ stages:
     cmd: python3 src/all_pipeline.py
     deps:
     - path: src/all_pipeline.py
-      md5: 29aa7bbf398ea6fa6f404e2db48be43f
-      size: 3780
+      md5: 925a0034ff1f22ec42c2716370b0a4aa
+      size: 3788
     params:
       params.yaml:
         evaluate.plots_file: metrics/cm_classes.csv
@@ -18,8 +18,8 @@ stages:
         train.params.random_state: 42
     outs:
     - path: metrics/scores.json
-      md5: fdeaac9d1cb988ebc5b5ee2fc1d5dca5
-      size: 103
+      md5: 5f2784dc0f25daa09e1b982799f9ff92
+      size: 104
     - path: models/model.pkl
-      md5: c0c297b70dc52c708cee55c0298843dc
+      md5: 8629a11b7e093a1b981f027949acbc39
       size: 1853670

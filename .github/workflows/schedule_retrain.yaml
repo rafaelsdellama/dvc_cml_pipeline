@@ -24,7 +24,7 @@ jobs:
         run: pip install -r pipelines/sklearn_classifier/requirements.txt
 
       - name: DVC Repro
-        run: dvc repro -P -f
+        run: dvc repro pipelines/sklearn_classifier/dvc.yaml -f
 
       - name: Write CML report
         env:
