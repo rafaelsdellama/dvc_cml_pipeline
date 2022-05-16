@@ -8,13 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: iterative/setup-cml@v1
+
+#      - uses: iterative/setup-dvc@v1
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-
-      - name: Install requirements
-        run: pip install -r pipelines/sklearn_classifier/requirements.txt
 
       - name: Write CML report
         env:
@@ -29,8 +30,9 @@ jobs:
           # Publish confusion matrix diff
           echo "## Plots" >> report.md
           echo "### Class confusions" >> report.md
-          dvc plots show pipelines/sklearn_classifier/metrics/cm_classes.csv --template confusion -x real -y predicted --show-vega > pipelines/sklearn_classifier/vega.json
-          vl2png pipelines/sklearn_classifier/vega.json -s 1.5 | cml-publish --md >> report.md
-          
+          dvc plots show pipelines/sklearn_classifier/metrics/cm_classes.csv --template confusion -x real -y predicted --show-vega > vega.json
+          vl2png vega.json -s 1.5 > plot.png
+          cml publish --md plot.png >> report.md
+
           cml-send-comment report.md
 #          cml-send-github-check report.md
