@@ -15,25 +15,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: iterative/setup-cml@v1
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-
-      - name: Install requirements
-        run: pip install -r pipelines/sklearn_classifier/requirements.txt
-
-      - name: DVC Repro
-        run: dvc repro pipelines/sklearn_classifier/dvc.yaml -f
-
-      - name: Write CML report
+      - name: Train model
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Post reports as comments in GitHub PRs
-          
+          # Install requirements
+          pip install -r pipelines/sklearn_classifier/requirements.txt
+
+          # Pull data & run-cache from S3 and reproduce pipeline
+          dvc repro pipelines/sklearn_classifier/dvc.yaml -f
+
           # Report metrics
           echo "## Métricas" >> report.md 
           cat pipelines/sklearn_classifier/metrics/scores.json >> report.md
