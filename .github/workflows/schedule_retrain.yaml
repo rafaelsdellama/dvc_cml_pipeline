@@ -1,12 +1,11 @@
 name: model-training
 
-#on:
-#  # Allows you to run this workflow manually from the Actions tab or through HTTP API
-#  workflow_dispatch:
-#  schedule:
-#    # (UTC TIME)
-#    - cron: '*/5 * * * *'
-on: [push]
+on:
+  # Allows you to run this workflow manually from the Actions tab or through HTTP API
+  workflow_dispatch:
+  schedule:
+    # (UTC TIME)
+    - cron: '*/30 * * * *'
 
 jobs:
   run:
@@ -24,6 +23,7 @@ jobs:
 
           # Pull data & run-cache from S3 and reproduce pipeline
           dvc repro pipelines/sklearn_classifier/dvc.yaml -f
+          dvc push
 
           # Report metrics
           echo "## Métricas" >> report.md 
