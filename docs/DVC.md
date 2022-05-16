@@ -549,7 +549,7 @@ with open(model_filename, 'wb') as f:
 
 Vamos depender do arquivo de script e da pasta data/features. Adicionamos os parametros no arquivo `params.yaml` e executamos o `dvc run`:
 ```
-dvc run -n train -p train.import_module,train.name,train.params.n_estimators,train.params.n_jobs,train.params.random_state -d src/train.py -d data/features -o models/model.pkl python3 src/train.py data/features models/models.pkl
+dvc run -n train -p train.import_module,train.name,train.params.n_estimators,train.params.n_jobs,train.params.random_state -d src/train.py -d data/features -o models/model.pkl python3 src/train.py data/features models/model.pkl
 ```
 
 ### 4. Avaliar o modelo
@@ -643,7 +643,7 @@ tutorial_dvc/
     |-- cm_classes.csv
     |-- scores.json
 |-- model/
-    |-- models.pkl
+    |-- model.pkl
 |-- src 
     |-- prepare.py 
     |-- featurize.py 

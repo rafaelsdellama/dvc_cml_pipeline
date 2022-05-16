@@ -21,11 +21,7 @@ stages:
     - data/features
     - src/train.py
     params:
-    - train.import_module
-    - train.name
-    - train.params.n_estimators
-    - train.params.n_jobs
-    - train.params.random_state
+    - train
     outs:
     - models/model.pkl
   evaluate:
