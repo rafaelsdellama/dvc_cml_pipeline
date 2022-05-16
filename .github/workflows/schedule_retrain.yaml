@@ -20,16 +20,15 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install requirements
-        run: pip install -r pipelines/sklearn_classifier/requirements.txt
-
-      - name: DVC Repro
-        run: dvc repro pipelines/sklearn_classifier/dvc.yaml -f
-
       - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+           # Install requirements
+          pip install -r pipelines/sklearn_classifier/requirements.txt
+          
+          dvc repro pipelines/sklearn_classifier/dvc.yaml -f
+
           # Post reports as comments in GitHub PRs
           
           # Report metrics
