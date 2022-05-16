@@ -20,15 +20,18 @@ jobs:
           # Post reports as comments in GitHub PRs
           
           # Report metrics
-          echo "## Métricas" >> report.md 
+          echo "## Metrics Results" >> report.md 
+          dvc metrics  show --show-md  >> report.md
+               
+          echo "### scores.json" >> report.md 
           cat pipelines/sklearn_classifier/metrics/scores.json >> report.md
           
           # Publish confusion matrix diff
           echo "## Plots" >> report.md
-          echo "### Class confusions" >> report.md
+          echo "### Confusion Matrix" >> report.md
           dvc plots show pipelines/sklearn_classifier/metrics/cm_classes.csv --template confusion -x real -y predicted --show-vega > vega.json
           vl2png vega.json -s 1.5 > plot.png
           cml publish --md plot.png >> report.md
 
-          cml-send-comment report.md
+#          cml-send-comment report.md
           cml-send-github-check report.md
