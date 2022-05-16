@@ -36,12 +36,12 @@ jobs:
               
               # Report metrics
               echo "## Métricas" >> report.md 
-              cat pipelines/sklearn_classifier/scores.json >> report.md
+              cat pipelines/sklearn_classifier/metrics/scores.json >> report.md
               
               # Publish confusion matrix diff
               echo "## Plots" >> report.md
               echo "### Class confusions" >> report.md
-              dvc plots show pipelines/sklearn_classifier/cm_classes.csv --template confusion -x real -y predicted --show-vega > pipelines/sklearn_classifier/vega.json
+              dvc plots show pipelines/sklearn_classifier/metrics/cm_classes.csv --template confusion -x real -y predicted --show-vega > pipelines/sklearn_classifier/vega.json
               vl2png pipelines/sklearn_classifier/vega.json -s 1.5 | cml-publish --md >> report.md
               
 #              cml-send-comment report.md
