@@ -43,16 +43,14 @@ stages:
     params:
       params.yaml:
         train:
-          import_module: sklearn.ensemble
-          name: RandomForestClassifier
+          import_module: sklearn.tree
+          name: DecisionTreeClassifier
           params:
-            n_estimators: 20
-            n_jobs: -1
             random_state: 42
     outs:
     - path: models/model.pkl
-      md5: c96534435a038f0abb23895bee1b3e87
-      size: 33051
+      md5: 4fad6838b8166aef58b4b325e377cc32
+      size: 2625
   evaluate:
     cmd: python3 src/evaluate.py models/model.pkl data/features metrics/scores.json
       metrics/cm_classes.csv
@@ -62,8 +60,8 @@ stages:
       size: 7504
       nfiles: 2
     - path: models/model.pkl
-      md5: c96534435a038f0abb23895bee1b3e87
-      size: 33051
+      md5: 4fad6838b8166aef58b4b325e377cc32
+      size: 2625
     - path: src/evaluate.py
       md5: 137af99858bccb9729c1d09b61687dbb
       size: 1961
@@ -75,5 +73,5 @@ stages:
         - adjusted_rand_score
     outs:
     - path: metrics/scores.json
-      md5: 5e5d96f6ccec7c8720d0cc3ce45eaea2
-      size: 128
+      md5: 50843813e3f05cd780ad0370f0f484ca
+      size: 127
