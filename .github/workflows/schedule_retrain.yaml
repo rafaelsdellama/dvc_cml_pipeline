@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 name: train-models
+=======
+name: train-model
+>>>>>>> 6e2cab6cbf87db14c0d23020f3eb80013222df7f
 
 on:
   # Allows you to run this workflow manually from the Actions tab or through HTTP API
   workflow_dispatch:
   schedule:
     # (UTC TIME)
+<<<<<<< HEAD
     - cron: '*/5 * * * *'
+=======
+    - cron: '0,10,20,30,40,50 * * * *'
+>>>>>>> 6e2cab6cbf87db14c0d23020f3eb80013222df7f
 
 jobs:
   run:
