@@ -1,4 +1,4 @@
-name: train-model
+name: model-training
 
 on:
   # Allows you to run this workflow manually from the Actions tab or through HTTP API
@@ -11,11 +11,8 @@ jobs:
   run:
     runs-on: ubuntu-latest
     container: docker://ghcr.io/iterative/cml:0-dvc2-base1
-
     steps:
       - uses: actions/checkout@v2
-
-      - uses: iterative/setup-cml@v1
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -26,27 +23,24 @@ jobs:
         run: pip install -r pipelines/sklearn_classifier/requirements.txt
 
       - name: DVC Repro
+        run: dvc repro -P -f
+
+      - name: Write CML report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Your ML workflow goes here
-          dvc repro -P -f
-    
-          - name: Write CML report
-            env:
-              REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: |
-              # Post reports as comments in GitHub PRs
-              
-              # Report metrics
-              echo "## Métricas" >> report.md 
-              cat pipelines/sklearn_classifier/metrics/scores.json >> report.md
-              
-              # Publish confusion matrix diff
-              echo "## Plots" >> report.md
-              echo "### Class confusions" >> report.md
-              dvc plots show pipelines/sklearn_classifier/metrics/cm_classes.csv --template confusion -x real -y predicted --show-vega > pipelines/sklearn_classifier/vega.json
-              vl2png vega.json -s 1.5 > plot.png
-              cml publish --md plot.png >> report.md
-              
-#              cml-send-comment report.md
-              cml-send-github-check report.md
-              cml-pr new_models
+          # Post reports as comments in GitHub PRs
+          
+          # Report metrics
+          echo "## Métricas" >> report.md 
+          cat pipelines/sklearn_classifier/metrics/scores.json >> report.md
+          
+          # Publish confusion matrix diff
+          echo "## Plots" >> report.md
+          echo "### Class confusions" >> report.md
+          dvc plots show pipelines/sklearn_classifier/metrics/cm_classes.csv --template confusion -x real -y predicted --show-vega > vega.json
+          vl2png vega.json -s 1.5 > plot.png
+          cml publish --md plot.png >> report.md
+
+          cml-send-github-check report.md
+          cml-pr new_models

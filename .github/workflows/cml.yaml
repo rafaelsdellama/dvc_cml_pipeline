@@ -1,4 +1,4 @@
-name: generate_report
+name: generate-report
 on: [push]
 jobs:
   run:
