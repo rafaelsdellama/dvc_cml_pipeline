@@ -14,6 +14,10 @@ jobs:
     container: docker://ghcr.io/iterative/cml:0-dvc2-base1
 
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - uses: actions/checkout@v2
       - name: Train model
         env:
@@ -24,7 +28,7 @@ jobs:
 
           # Pull data & run-cache from S3 and reproduce pipeline
           dvc repro pipelines/sklearn_classifier/dvc.yaml -f
-          dvc push
+          # dvc push
 
           # Report metrics
           echo "## Métricas" >> report.md 
@@ -39,3 +43,17 @@ jobs:
 
           cml-send-github-check report.md
           cml-pr new_models
+          
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: "automatic retrain at ${{ steps.date.outputs.date }}"
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: sync_submodules
+          delete-branch: true
+          title: 'Retrain'
+          body: |
+            Retrain model
+          draft: false
