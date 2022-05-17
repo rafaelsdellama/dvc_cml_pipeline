@@ -41,7 +41,13 @@ exemplo-dvc-pipeline/
 
 O fluxo de trabalho das seguintes seções é mostrado na Figura 1 abaixo:
 
-[//]: # (TODO: Figura 1)
+![mlp_feature_GASearch](/doc/images/dvc.png)
+
+<figure>
+<img src="/doc/images/dvc.png" alt="Trulli" style="width:100%">
+<figcaption align = "center"><b>Figura 1 - Versionamento com DVC</br>Fonte: https://yizhenzhao.medium.com/mlops-data-versioning-with-dvc-part-%E2%85%B0-8b3221df8592
+</b></figcaption>
+</figure>
 
 **Controle de versão de artefatos de ML**
 
