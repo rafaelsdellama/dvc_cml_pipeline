@@ -73,5 +73,5 @@ stages:
         - adjusted_rand_score
     outs:
     - path: metrics/scores.json
-      md5: 50843813e3f05cd780ad0370f0f484ca
+      md5: 6719118005b4ff03f3852a591e0bc332
       size: 127
