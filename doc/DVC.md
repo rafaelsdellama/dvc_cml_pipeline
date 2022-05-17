@@ -41,12 +41,12 @@ exemplo-dvc-pipeline/
 
 O fluxo de trabalho das seguintes seções é mostrado na Figura 1 abaixo:
 
-![dvc](/doc/images/dvc.png)
+[//]: # (![dvc]&#40;/doc/images/dvc.png&#41;)
 
 <figure>
-<img src="/doc/images/dvc.png" alt="Trulli" style="width:100%">
-<figcaption align = "center"><b>Figura 1 - Versionamento com DVC</br>Fonte: https://yizhenzhao.medium.com/mlops-data-versioning-with-dvc-part-%E2%85%B0-8b3221df8592
-</b></figcaption>
+    <img src="/doc/images/dvc.png" alt="Trulli" style="width:100%">
+    <figcaption align = "center"><b>Figura 1 - Versionamento com DVC</br>Fonte: https://yizhenzhao.medium.com/mlops-data-versioning-with-dvc-part-%E2%85%B0-8b3221df8592
+    </b></figcaption>
 </figure>
 
 **Controle de versão de artefatos de ML**
@@ -161,7 +161,11 @@ Isso nos permite executar e reproduzir facilmente qualquer estágio em seu pipel
 Primeiro, você precisará do DVC instalado, com versão de dados e armazenamento remoto adicionado. 
 Em seguida, o fluxo de trabalho de exemplo de estabelecimento do pipeline de ML a seguir é descrito abaixo.
 
-[//]: # (TODO: Figura 2. pipelines de ML)
+<figure>
+    <img src="/doc/images/ml_pipeline.png" alt="Trulli" style="width:100%">
+    <figcaption align = "center"><b>Figura 2 - pipelines de ML. Fonte: https://yizhenzhao.medium.com/mlops-data-versioning-with-dvc-part-%E2%85%B0-8b3221df8592
+    </b></figcaption>
+</figure>
 
 Execute [`dvc run`](!https://dvc.org/doc/command-reference/run)  para criar estágios. Os estágios são as etapas exclusivas de um pipeline e podem ser rastreados via git. 
 Os estágios também conectam o código à sua entrada e saída de dados (semelhante ao Snakemake). Os estágios com todas as dependências e parâmetros correspondentes são gravados em um arquivo de pipeline especial chamado dvc.yaml.
