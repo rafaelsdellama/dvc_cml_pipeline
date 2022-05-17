@@ -41,7 +41,7 @@ exemplo-dvc-pipeline/
 
 O fluxo de trabalho das seguintes seções é mostrado na Figura 1 abaixo:
 
-![mlp_feature_GASearch](/doc/images/dvc.png)
+![dvc](/doc/images/dvc.png)
 
 <figure>
 <img src="/doc/images/dvc.png" alt="Trulli" style="width:100%">
